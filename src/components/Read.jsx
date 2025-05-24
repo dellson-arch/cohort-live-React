@@ -14,7 +14,7 @@ const Read = (props) => {
   return (
     <div>
       <h1>pending tasks</h1>
-      <p>{renderUser}</p>
+      <ol>{renderUser}</ol>
     </div>
   );
 };
