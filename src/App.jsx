@@ -1,15 +1,13 @@
-import { useState } from "react"
 import Create from "./components/create"
 import Read from "./components/read"
+
 const App = () => {
-  const[todo , SetTodo] = useState([
-    {id: 1 , title:"kaam karle bhai" , isComplete : false}
-  ])
+
 
   return (
-    <div>
-    <Create  todo = {todo} SetTodo = {SetTodo}/>
-    <Read todo = {todo} SetTodo = {SetTodo} /> 
+    <div className="text-white flex w-screen h-screen bg-gray-800  p-10">
+    <Create />
+    <Read /> 
     </div>
   )
 }

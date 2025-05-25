@@ -2,31 +2,30 @@
 
 
 import { nanoid } from "nanoid";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { todocontext } from "../../Wrapper";
 
 
-const Create = (props) => {
-  const todo = props.todo;
-  const SetTodo = props.SetTodo;
+const Create = () => {
+  const [todo , SetTodo] = useContext(todocontext);
 
   const{register , // two-way binding ke liye
         handleSubmit , //submission ke liye 
         reset ,  //form ko reset karne ke liye 
-        formState:{errors}} // error find arne ke liye 
+        formState:{errors}} // error find karne ke liye  and validation lagane ke liye
         = useForm()
 
   const submithandler = (data) => {
        data.isComplete = false;
        data.id = nanoid()
 
-       //wahi same process data dikhane ke liye
         SetTodo([...todo , data]) // aise bhi likh sakte hai 
+    
+        toast.success("todo created !")
 
-      //   const copyTodos = [...todo];
-      //  copyTodos.push(data);     // aise bhi likh sakte hai
-      //  SetTodo(copyTodos);
-
-       reset()
+        reset()
 
     // const newTodo = {
     //     id : nanoid(),
@@ -37,20 +36,24 @@ const Create = (props) => {
   };
 
   return (
-    <div>
-      <h1 className="">Create Tasks</h1>
+    <div className=" w-[70%] p-10 ">
+      <h1 className="mb-10 text-5xl font-thin">
+        Set  <span className="text-red-400"> Reminders</span> for <br/>
+         tasks
+         </h1>
 
       <form onSubmit={handleSubmit(submithandler)}>
         <input
-          {...register("title")}//register ko spread karna hai and input ka naam likna hai apan input ka naam title rakha hai
+        className="border-b w-full text-2xl font-thin p-2 outline-0"
+          {...register("title" , {required:"title cannot be empty"})}//register ko spread karna hai and input ka naam likna hai apan input ka naam title rakha hai
           type="text"
           placeholder="title"
-        />
+         />
+         <small className="font-thin text-red-400">{errors?.title?.message}</small>
         <br />
         <br />
-        <button>Create todo</button>
+        <button className=" mt-5 text-xl px-10 py-2 border rounded">Create todo</button>
       </form>
-      <hr />
     </div>
   );
 };
